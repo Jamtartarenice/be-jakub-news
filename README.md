@@ -11,4 +11,4 @@ and in the development .env:
 
 PGDATABASE=nc_news  
 
-but this could change so u might want to go into db/setup.sql to see the two data base names and put them into there corresponding .envs  
+but this could change so you might want to go into db/setup.sql to see the two data base names and put them into there corresponding .envs  
