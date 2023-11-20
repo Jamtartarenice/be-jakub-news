@@ -9,7 +9,6 @@ afterAll(() => db.end());
 
 describe('app', () => {
 describe('Get all topics', () => {
-
     test('checking to make sure that topics returns all in topics', () => {
         return request(app)
         .get('/api/topics')
@@ -23,13 +22,28 @@ describe('Get all topics', () => {
             ]);
         });
     });
+});
 
-    test('checking to make sure it returns the right amount of items', () => {
+describe('/api (getting all endpoints)', () => {
+    test('making sure that its responding with an object of endpoints', () => {
         return request(app)
-        .get('/api/topics')
+        .get('/api')
         .expect(200)
         .then((topics) => {
-            expect(topics.text).not.toEqual("Failed to find this DataBase");
+            expect(Object.keys(topics.body.endPoints)).toEqual([ 'GET /api', 'GET /api/topics', 'GET /api/articles' ]);
+        });
+    });
+
+    test('making sure that its responding with an object of endpoints that has all the required sub keys', () => {
+        return request(app)
+        .get('/api')
+        .expect(200)
+        .then((topics) => {
+            const {body: { endPoints }} = topics
+            const tempKey = Object.keys(endPoints)[1];
+            
+            expect(Object.keys(endPoints[tempKey]))
+            .toEqual([ "description", "queries", "exampleResponse" ]);
         });
     });
 });
