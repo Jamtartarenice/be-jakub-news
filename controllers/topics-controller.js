@@ -1,4 +1,4 @@
-const {getAllTopics, ReadEndPoint} = require('../models/topics-models')
+const {getAllTopics, ReadEndPoint, get} = require('../models/topics-models')
 
 exports.getTopics = (req,res,next) => {
     getAllTopics()
@@ -13,3 +13,11 @@ exports.getEndPoints = (req,res,next) => {
         res.status(200).send({ endPoints });
     })
 }
+
+exports.getArticleComments = (req,res,next) => {
+    const { article_id } = req.params;
+    getArticleCommentByID(article_id)
+    .then((articleComments) => {
+        res.status(200).send({ articleComments });
+    });
+};

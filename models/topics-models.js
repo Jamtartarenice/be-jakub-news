@@ -1,5 +1,6 @@
 const db = require('../db/connection.js');
 const fs = require('fs/promises');
+const format = require('pg-format');
 
 exports.getAllTopics = () => {
 return db.query(`SELECT * FROM topics;`)
@@ -13,5 +14,12 @@ exports.ReadEndPoint = () => {
     .then((ends) => { 
         const parse = JSON.parse(ends);
         return parse;
+    });
+};
+
+exports.getArticleCommentByID = (id) => {
+    return db.query(format(`SELECT * FROM articles WHERE article_id = $1;`,[id]))
+    .then((comments) => {
+        return comments.rows;
     });
 };

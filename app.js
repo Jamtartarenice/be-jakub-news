@@ -1,8 +1,10 @@
 const express = require('express');
 const app = express();
-const {getTopics, getEndPoints} = require('./controllers/topics-controller.js')
+const {getTopics, getEndPoints, getArticleComments} = require('./controllers/topics-controller.js')
 
 app.use(express.json());
+
+app.get('/api/articles/:article_id/comments',)
 
 app.get('/api/topics', getTopics);
 
