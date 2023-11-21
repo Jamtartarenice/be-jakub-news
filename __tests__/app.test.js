@@ -57,24 +57,26 @@ describe('/api/articles/:article_id', () => {
         .expect(200)
         .then((article) => {
             expect(article.body.article.article_id).toBe(2);
+            expect(Object.keys(article.body.article))
+            .toEqual(     
+            [
+                'article_id',
+                'title',
+                'topic',
+                'author',
+                'body',
+                'created_at',
+                'votes',
+                'article_img_url'
+            ]);
         });
     });
 
-    test('making sure that its responding with an article with the desired id when tested multipul times', () => {
-        return request(app)
-        .get('/api/articles/5')
-        .expect(200)
-        .then((article) => {
-            expect(article.body.article.article_id).toBe(5);
-        });
-    });
-
-    test('making sure that its when it fails it give a special error', () => {
+    test('making sure it returns 404 when given an valid but non existing id', () => {
         return request(app)
         .get('/api/articles/50')
         .expect(404)
         .then((article) => {
-            console.log(article.res.statusMessage);
             expect(article.res.statusMessage).toBe('Not Found');
         });
     });
