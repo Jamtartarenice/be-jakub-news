@@ -48,4 +48,25 @@ describe('/api (getting all endpoints)', () => {
         });
     });
 });
+
+describe('Get all articles', () => {
+    test('making sure to return all articles', () => {
+        return request(app)
+        .get('/api/articles')
+        .expect(200)
+        .then((articles) => {
+            expect(articles.body.articles[0])
+            .toEqual({
+                article_id: 3,
+                title: 'Eight pug gifs that remind me of mitch',
+                topic: 'mitch',
+                author: 'icellusedkars',
+                created_at: '2020-11-03T09:12:00.000Z',
+                votes: 0,
+                article_img_url: 'https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700'
+            });
+        });
+    });
+});
+
 });

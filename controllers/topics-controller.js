@@ -1,4 +1,4 @@
-const {getAllTopics, ReadEndPoint} = require('../models/topics-models')
+const {getAllTopics, ReadEndPoint, getAllPossibleArticles} = require('../models/topics-models')
 
 exports.getTopics = (req,res,next) => {
     getAllTopics()
@@ -13,3 +13,10 @@ exports.getEndPoints = (req,res,next) => {
         res.status(200).send({ endPoints });
     })
 }
+
+exports.getAllArticles = (req,res,next) => {
+    getAllPossibleArticles()
+    .then((articles) => {
+        res.status(200).send({ articles });
+    })
+};
