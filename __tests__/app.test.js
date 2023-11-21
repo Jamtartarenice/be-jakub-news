@@ -3,6 +3,7 @@ const seed = require('../db/seeds/seed.js');
 const request = require('supertest');
 const app = require('../app.js');
 const index = require('../db/data/test-data/index.js')
+const endPointsFile = require('../endpoints.json');
 
 beforeAll(() => seed(index));
 afterAll(() => db.end());
@@ -30,7 +31,7 @@ describe('/api (getting all endpoints)', () => {
         .get('/api')
         .expect(200)
         .then((topics) => {
-            expect(Object.keys(topics.body.endPoints)).toEqual([ 'GET /api', 'GET /api/topics', 'GET /api/articles' ]);
+            expect(topics.body.endPoints).toEqual(endPointsFile);
         });
     });
 

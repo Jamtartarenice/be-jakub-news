@@ -1,4 +1,4 @@
-const {getAllTopics, ReadEndPoint} = require('../modules/topics-modules')
+const {getAllTopics, ReadEndPoint} = require('../models/topics-models')
 
 exports.getTopics = (req,res,next) => {
     getAllTopics()
