@@ -5,6 +5,7 @@ const app = require('../app.js');
 const index = require('../db/data/test-data/index.js')
 const endPointsFile = require('../endpoints.json');
 
+
 beforeAll(() => seed(index));
 afterAll(() => db.end());
 
@@ -45,6 +46,36 @@ describe('/api (getting all endpoints)', () => {
             
             expect(Object.keys(endPoints[tempKey]))
             .toEqual([ "description", "queries", "exampleResponse" ]);
+        });
+    });
+});
+
+describe('/api/articles/:article_id', () => {
+    test('making sure that its responding with an article with the desired id', () => {
+        return request(app)
+        .get('/api/articles/2')
+        .expect(200)
+        .then((article) => {
+            expect(article.body.article.article_id).toBe(2);
+        });
+    });
+
+    test('making sure that its responding with an article with the desired id when tested multipul times', () => {
+        return request(app)
+        .get('/api/articles/5')
+        .expect(200)
+        .then((article) => {
+            expect(article.body.article.article_id).toBe(5);
+        });
+    });
+
+    test('making sure that its when it fails it give a special error', () => {
+        return request(app)
+        .get('/api/articles/50')
+        .expect(404)
+        .then((article) => {
+            console.log(article.res.statusMessage);
+            expect(article.res.statusMessage).toBe('Not Found');
         });
     });
 });
