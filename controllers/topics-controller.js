@@ -1,4 +1,5 @@
-const {getAllTopics, ReadEndPoint, getAllPossibleArticles} = require('../models/topics-models')
+const {getAllTopics, ReadEndPoint, getArticleById, getAllPossibleArticles} = require('../models/topics-models')
+const {checkExists} = require('../db/seeds/utils.js');
 
 exports.getTopics = (req,res,next) => {
     getAllTopics()
@@ -13,6 +14,15 @@ exports.getEndPoints = (req,res,next) => {
         res.status(200).send({ endPoints });
     })
 }
+
+exports.getArticleBy = (req,res,next) => {
+    const { article_id } = req.params
+        Promise.all([checkExists('articles', 'article_id', article_id), getArticleById(article_id)])
+        .then(article => {
+            res.status(200).send({ article: article[1][0] })
+        })
+        .catch(next);
+};
 
 exports.getAllArticles = (req,res,next) => {
     getAllPossibleArticles()
