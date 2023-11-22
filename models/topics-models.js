@@ -20,6 +20,6 @@ exports.ReadEndPoint = () => {
 exports.getArticleById = (ID) => {
     return db.query(format('SELECT * FROM articles WHERE article_id = %L ;', [ID]))
     .then((article) => {
-        return article.rows[0];
+        return article.rows;
     })
 };

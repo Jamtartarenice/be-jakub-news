@@ -17,13 +17,9 @@ exports.getEndPoints = (req,res,next) => {
 
 exports.getArticleBy = (req,res,next) => {
     const { article_id } = req.params
-
-    checkExists('articles', 'article_id', article_id)
-    .then(() => {
-        getArticleById(article_id)
+        Promise.all([checkExists('articles', 'article_id', article_id), getArticleById(article_id)])
         .then(article => {
-            res.status(200).send({ article })
+            res.status(200).send({ article: article[1][0] })
         })
-    })
-    .catch(next);
+        .catch(next);
 };
