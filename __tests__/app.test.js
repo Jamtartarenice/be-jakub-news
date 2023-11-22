@@ -56,7 +56,6 @@ describe('/api/articles/:article_id', () => {
         .get('/api/articles/2')
         .expect(200)
         .then((article) => {
-            console.log(article.body.article);
             expect(article.body.article.article_id).toBe(2);
             expect(article.body.article)
             .toEqual({
