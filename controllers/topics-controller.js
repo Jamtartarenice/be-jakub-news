@@ -19,8 +19,8 @@ exports.getArticleComments = (req,res,next) => {
     const { article_id } = req.params;
     console.log('in controller get')
     Promise.all([checkExists('comments', 'article_id', article_id), getArticleCommentByID(article_id)])
-    .then((articleComments) => {
-        res.status(200).send({ articleComments });
+    .then((comments) => {
+        res.status(200).send({ comments });
     })
-    .catch(console.log('failed'))
+    .catch(console.log('failed in check'))
 };

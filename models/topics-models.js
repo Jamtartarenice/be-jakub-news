@@ -18,9 +18,9 @@ exports.ReadEndPoint = () => {
 };
 
 exports.getArticleCommentByID = (id) => {
-    return db.query(format(`SELECT * FROM comments WHERE article_id = $1;`,[id]))
+    console.log('in modoles');
+    return db.query(format(`SELECT * FROM comments WHERE article_id = %s;`,id))
     .then((comments) => {
-        console.log(comments)
         return comments.rows;
     });
 };

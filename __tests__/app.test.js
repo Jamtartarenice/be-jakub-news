@@ -52,9 +52,11 @@ describe('/api (getting all endpoints)', () => {
 describe('Get all comments by id', () => {
     test('should return all comments that have article id 1 in them ', () => {
         return request(app)
-        .get('/api/articles/2/comments')
-        .expect(500)
+        .get('/api/articles/1/comments')
+        .expect(200)
         .then((articleComments) => {
+            const comments = articleComments.body.comments[1];
+            console.log(comments)
             expect().toEqual();
         });
     });
