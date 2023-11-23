@@ -20,6 +20,7 @@ exports.ReadEndPoint = () => {
 exports.getArticleCommentByID = (id) => {
     return db.query(format(`SELECT * FROM comments WHERE article_id = $1;`,[id]))
     .then((comments) => {
+        console.log(comments)
         return comments.rows;
     });
 };

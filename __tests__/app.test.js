@@ -54,7 +54,7 @@ describe('Get all comments by id', () => {
         return request(app)
         .get('/api/articles/2/comments')
         .expect(500)
-        .then((topics) => {
+        .then((articleComments) => {
             expect().toEqual();
         });
     });
