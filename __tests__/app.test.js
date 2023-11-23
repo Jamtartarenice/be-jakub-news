@@ -160,3 +160,9 @@ describe('/api/articles/:article_id', () => {
             });
         });
 });
+
+describe('Post article comment', () => {
+    test('should post the article', () => {
+        
+    });
+});
