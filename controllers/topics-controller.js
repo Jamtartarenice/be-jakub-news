@@ -17,7 +17,7 @@ exports.getEndPoints = (req,res,next) => {
 
 exports.getArticleComments = (req,res,next) => {
     const { article_id } = req.params;
-    Promise.all([checkExists('comments', 'article_id', article_id), getArticleCommentByID(article_id)])
+    Promise.all([checkExists('articles', 'article_id', article_id), getArticleCommentByID(article_id)])
     .then((comments) => {
         res.status(200).send({ comments });
     })
