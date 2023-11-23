@@ -56,8 +56,16 @@ describe('Get all comments by id', () => {
         .expect(200)
         .then((articleComments) => {
             const comments = articleComments.body.comments[1];
-            console.log(comments)
-            expect().toEqual();
+            comments.forEach(comment => {
+                expect(comment).toEqual(expect.objectContaining({ 
+                    comment_id: expect.any(Number), 
+                    body: expect.any(String),
+                    article_id: expect.any(Number),
+                    author: expect.any(String),
+                    votes: expect.any(Number),
+                    created_at: expect.any(String),
+                }));
+            });
         });
     });
 });
