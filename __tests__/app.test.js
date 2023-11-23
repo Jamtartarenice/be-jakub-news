@@ -132,7 +132,7 @@ describe('/api/articles/:article_id', () => {
         });
     });
 
-    test('should return fail and return 404', () => {
+    test('should return fail and return 404 when passed a valid but non-existent article_id', () => {
         return request(app)
         .get('/api/articles/1000/comments')
         .expect(404)
