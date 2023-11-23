@@ -112,4 +112,51 @@ describe('/api/articles/:article_id', () => {
     });
 });
 
+  describe('Get all comments by id', () => {
+    test('should return all comments that have article id 1 in them ', () => {
+        return request(app)
+        .get('/api/articles/1/comments')
+        .expect(200)
+        .then((articleComments) => {
+            const comments = articleComments.body.comments[1];
+            comments.forEach(comment => {
+                expect(comment).toEqual(expect.objectContaining({ 
+                    comment_id: expect.any(Number), 
+                    body: expect.any(String),
+                    article_id: expect.any(Number),
+                    author: expect.any(String),
+                    votes: expect.any(Number),
+                    created_at: expect.any(String),
+                }));
+            });
+        });
+    });
+
+    test('should return fail and return 404 when passed a valid but non-existent article_id', () => {
+        return request(app)
+        .get('/api/articles/1000/comments')
+        .expect(404)
+        .then((articleComments) => {
+                expect(articleComments.res.statusMessage).toEqual('Not Found');
+            });
+        });
+
+    test('should return fail and return 400 when given an invaild id', () => {
+        return request(app)
+        .get('/api/articles/bean/comments')
+        .expect(400)
+        .then((articleComments) => {
+                expect(articleComments.res.statusMessage).toEqual('Bad Request');
+            });
+        });
+    });
+
+    test('should return 200 even if its a valid id but no comments are there', () => {
+        return request(app)
+        .get('/api/articles/2/comments')
+        .expect(200)
+        .then((articleComments) => {
+                expect(articleComments.res.statusMessage).toEqual('OK');
+            });
+        });
 });
