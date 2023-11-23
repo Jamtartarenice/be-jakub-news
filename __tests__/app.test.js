@@ -48,4 +48,15 @@ describe('/api (getting all endpoints)', () => {
         });
     });
 });
+
+describe('Get all comments by id', () => {
+    test('should return all comments that have article id 1 in them ', () => {
+        return request(app)
+        .get('/api/articles/2/comments')
+        .expect(500)
+        .then((topics) => {
+            expect().toEqual();
+        });
+    });
+});
 });

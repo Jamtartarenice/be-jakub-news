@@ -4,7 +4,7 @@ const {getTopics, getEndPoints, getArticleComments} = require('./controllers/top
 
 app.use(express.json());
 
-app.get('/api/articles/:article_id/comments',)
+app.get('/api/articles/:article_id/comments', getArticleComments)
 
 app.get('/api/topics', getTopics);
 
