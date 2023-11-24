@@ -262,6 +262,65 @@ describe('Post article comment', () => {
         });
     });
 
+    describe('Patch', () => {
+    test('should patch in what ever data has been sent into the desired article', () => {
+        return request(app)
+        .patch('/api/articles/1')
+        .send({inc_votes : 1})
+        .expect(200)
+        .then(({body: {result}}) => {
+            expect(result).toEqual(expect.objectContaining({ 
+                article_id: expect.any(Number),
+                article_img_url: expect.any(String),
+                body: expect.any(String),
+                created_at: expect.any(String),
+                title: expect.any(String),
+                topic: expect.any(String),
+                votes: 101,
+                }));
+            });
+        });
+    });
+
+    test('should fail with 404 when inc votes is not found', () => {
+        return request(app)
+        .patch('/api/articles/1')
+        .send({beans : 1})
+        .expect(404)
+        .then((responce) => {
+            expect(responce.res.statusMessage).toEqual('Not Found');
+        });
+    });
+
+    test('should fail with 404 when id that is given is valid but not existant id', () => {
+        return request(app)
+        .patch('/api/articles/1001')
+        .send({inc_votes : 1})
+        .expect(404)
+        .then((responce) => {
+            expect(responce.res.statusMessage).toEqual('Not Found');
+        });
+    });
+
+    test('should fail with 400 when id that is given is invalid', () => {
+        return request(app)
+        .patch('/api/articles/beans')
+        .send({inc_votes : 1})
+        .expect(400)
+        .then((responce) => {
+            expect(responce.res.statusMessage).toEqual('Bad Request');
+        });
+    });
+
+    test('should fail with 400 when it is  given an invalid item in inc votes', () => {
+        return request(app)
+        .patch('/api/articles/1')
+        .send({inc_votes : 'beans'})
+        .expect(400)
+        .then((responce) => {
+            expect(responce.res.statusMessage).toEqual('Bad Request');
+        });
+    });
     describe('Delete Comment', () => {
         test('should delete a comment and return just 204', () => {
             return request(app)
@@ -281,4 +340,5 @@ describe('Post article comment', () => {
             .expect(400);
         });
     });    
+});
 });
