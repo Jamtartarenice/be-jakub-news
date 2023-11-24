@@ -162,7 +162,103 @@ describe('/api/articles/:article_id', () => {
 });
 
 describe('Post article comment', () => {
-    test('should post the article', () => {
-        
+    test('should post the article and be successful', () => {
+        return request(app)
+        .post('/api/articles/1/comments')
+        .send( {
+            body: "Wordsssssssssssss",
+            username: "butter_bridge",
+        })
+        .expect(200)
+        .then(({body: { comment }}) => {
+            expect(comment).toEqual(expect.objectContaining({
+                comment_id: 19,
+                body: 'Wordsssssssssssss',
+                article_id: 1,
+                author: 'butter_bridge',
+                votes: 0,
+                created_at: expect.any(String)
+            }))
+        });
+    });
+
+    test('should fail with 400 when given an empty object ', () => {
+        return request(app)
+        .post('/api/articles/1/comments')
+        .send({})
+        .expect(400)
+        .then((responce) => {
+            expect(responce.res.statusMessage).toEqual('Bad Request');
+        });
+    });
+
+    test('should fail with 400 when given the wrong items in the object ', () => {
+        return request(app)
+        .post('/api/articles/1/comments')
+        .send({ rating_out_of_five: 6})
+        .expect(400)
+        .then((responce) => {
+            expect(responce.res.statusMessage).toEqual('Bad Request');
+        });
+    });
+
+    test('should pass with 200 when given unceassery objects', () => {
+        return request(app)
+        .post('/api/articles/1/comments')
+        .send({
+            body: "Wordsssssssssssss",
+            username: "butter_bridge",
+            bean: 2
+        })
+        .expect(200)
+        .then(({body: { comment }}) => {
+            expect(comment).toEqual(expect.objectContaining({
+                comment_id: expect.any(Number),
+                body: 'Wordsssssssssssss',
+                article_id: 1,
+                author: 'butter_bridge',
+                votes: 0,
+                created_at: expect.any(String)
+            }))
+        });
+    });
+
+    test('should fail with 400 when article id is not a number', () => {
+        return request(app)
+        .post('/api/articles/beans/comments')
+        .send({
+            body: "Wordsssssssssssss",
+            username: "butter_bridge",
+        })
+        .expect(400)
+        .then((responce) => {
+            expect(responce.res.statusMessage).toEqual('Bad Request');
+        });
+    });
+
+    test('should fail with 404 when article id is invalid', () => {
+        return request(app)
+        .post('/api/articles/100/comments')
+        .send({
+            body: "Wordsssssssssssss",
+            username: "butter_bridge",
+        })
+        .expect(404)
+        .then((responce) => {
+            expect(responce.res.statusMessage).toEqual('Not Found');
+        });
+    });
+
+    test('should fail with 404 when username is not found', () => {
+        return request(app)
+        .post('/api/articles/1/comments')
+        .send({
+            body: "Wordsssssssssssss",
+            username: "random crap",
+        })
+        .expect(404)
+        .then((responce) => {
+            expect(responce.res.statusMessage).toEqual('Not Found');
+        });
     });
 });
