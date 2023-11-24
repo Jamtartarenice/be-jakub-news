@@ -236,9 +236,9 @@ describe('Post article comment', () => {
         });
     });
 
-    test('should fail with 404 when article id does not exist', () => {
+    test('should fail with 404 when article id is invalid', () => {
         return request(app)
-        .post('/api/articles//comments')
+        .post('/api/articles/100/comments')
         .send({
             body: "Wordsssssssssssss",
             username: "butter_bridge",
@@ -251,7 +251,7 @@ describe('Post article comment', () => {
 
     test('should fail with 404 when username is not found', () => {
         return request(app)
-        .post('/api/articles//comments')
+        .post('/api/articles/1/comments')
         .send({
             body: "Wordsssssssssssss",
             username: "random crap",
