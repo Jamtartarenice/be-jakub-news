@@ -321,4 +321,24 @@ describe('Post article comment', () => {
             expect(responce.res.statusMessage).toEqual('Bad Request');
         });
     });
+    describe('Delete Comment', () => {
+        test('should delete a comment and return just 204', () => {
+            return request(app)
+            .delete('/api/comments/1')
+            .expect(204);
+        });
+
+        test('should fail when given an nonexistent id ', () => {
+            return request(app)
+            .delete('/api/comments/1001')
+            .expect(404);
+        });
+
+        test('should fail when given an string as an id ', () => {
+            return request(app)
+            .delete('/api/comments/beans')
+            .expect(400);
+        });
+    });    
+});
 });

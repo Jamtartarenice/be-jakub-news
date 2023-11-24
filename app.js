@@ -7,7 +7,8 @@ const {
     getAllArticles, 
     getArticleComments, 
     postArticleComment,
-    patchArticleID
+    patchArticleID,
+    deleteComment
 } = require('./controllers/topics-controller.js')
 const {
     handleCustomErrors,
@@ -16,6 +17,8 @@ const {
     } = require('./errors.js');
 
 app.use(express.json());
+
+app.delete('/api/comments/:comment_id',deleteComment)
 
 app.patch('/api/articles/:article_id',patchArticleID)
 

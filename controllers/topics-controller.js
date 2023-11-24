@@ -4,6 +4,7 @@ const {getAllTopics,
     getAllPossibleArticles, 
     getArticleCommentByID, 
     postAComment,
+    removeCommentByID,
     updateArticleByID
     } = require('../models/topics-models')
 const {checkExists} = require('../db/seeds/utils.js');
@@ -57,7 +58,16 @@ exports.postArticleComment = (req,res,next) => {
     .catch(next);
 };
 
-exports.patchArticleID = (req,res,next) => {
+exports.deleteComment = (req,res,next) => {
+    const { comment_id } = req.params;
+    Promise.all([checkExists('comments', 'comment_id', comment_id), removeCommentByID(comment_id)])
+    .then(() => {
+        res.status(204).send();
+    })
+    .catch(next)
+};
+
+  exports.patchArticleID = (req,res,next) => {
     const {article_id} = req.params;
     const body = req.body;
     Promise.all([checkExists('articles', 'article_id', article_id),updateArticleByID(article_id, body)])

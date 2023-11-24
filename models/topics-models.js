@@ -47,6 +47,10 @@ exports.postAComment = (article_id, body) => {
     });
 }
 
+exports.removeCommentByID = (comment_id) => {
+    return db.query(format(`DELETE FROM comments WHERE comment_id = %s;`,comment_id))
+};
+  
 exports.updateArticleByID = (article_id, body) => {
     return db.query(`SELECT votes FROM articles WHERE article_id = '${article_id}';`)
     .then((currentVotes) => {
@@ -56,5 +60,4 @@ exports.updateArticleByID = (article_id, body) => {
             return treasure.rows[0];
         })
     })
-
 };
