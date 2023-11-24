@@ -46,3 +46,7 @@ exports.postAComment = (article_id, body) => {
         return comment.rows[0];
     });
 }
+
+exports.removeCommentByID = (comment_id) => {
+    return db.query(format(`DELETE FROM comments WHERE comment_id = %s;`,comment_id))
+};
