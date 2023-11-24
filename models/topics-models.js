@@ -46,3 +46,15 @@ exports.postAComment = (article_id, body) => {
         return comment.rows[0];
     });
 }
+
+exports.updateArticleByID = (article_id, body) => {
+    return db.query(`SELECT votes FROM articles WHERE article_id = '${article_id}';`)
+    .then((currentVotes) => {
+        const wantedVotes = currentVotes.rows[0].votes + body.inc_votes;
+        return db.query(`UPDATE articles SET votes = ${wantedVotes} WHERE article_id = '${article_id}' RETURNING *;`)
+        .then((treasure) => {
+            return treasure.rows[0];
+        })
+    })
+
+};
