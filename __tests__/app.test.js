@@ -341,4 +341,3 @@ describe('Post article comment', () => {
         });
     });    
 });
-});
