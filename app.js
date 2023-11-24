@@ -1,6 +1,14 @@
 const express = require('express');
 const app = express();
-const {getTopics, getEndPoints, getArticleBy, getAllArticles, getArticleComments, postArticleComment} = require('./controllers/topics-controller.js')
+const {
+    getTopics, 
+    getEndPoints, 
+    getArticleBy, 
+    getAllArticles, 
+    getArticleComments, 
+    postArticleComment,
+    patchArticleID
+} = require('./controllers/topics-controller.js')
 const {
     handleCustomErrors,
     handlePsqlErrors,
@@ -8,6 +16,8 @@ const {
     } = require('./errors.js');
 
 app.use(express.json());
+
+app.patch('/api/articles/:article_id',patchArticleID)
 
 app.post('/api/articles/:article_id/comments',postArticleComment)
 
