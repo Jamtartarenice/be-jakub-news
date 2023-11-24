@@ -1,4 +1,10 @@
-const {getAllTopics, ReadEndPoint, getArticleById, getAllPossibleArticles, getArticleCommentByID} = require('../models/topics-models')
+const {getAllTopics, 
+    ReadEndPoint, 
+    getArticleById, 
+    getAllPossibleArticles, 
+    getArticleCommentByID, 
+    postAComment
+    } = require('../models/topics-models')
 const {checkExists} = require('../db/seeds/utils.js');
 
 exports.getTopics = (req,res,next) => {
@@ -38,4 +44,14 @@ exports.getArticleComments = (req,res,next) => {
         res.status(200).send({ comments });
     })
     .catch(next)
+};
+
+exports.postArticleComment = (req,res,next) => {
+    const { article_id } = req.params;
+    const body = req.body;
+    postAComment(article_id, body)
+    .then((comment) => {
+        res.status(200).send({ comment });
+    })
+    .catch(next);
 };

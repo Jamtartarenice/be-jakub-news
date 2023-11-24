@@ -37,3 +37,12 @@ exports.getArticleCommentByID = (id) => {
         return comments.rows;
     });
 };
+
+exports.postAComment = (article_id, body) => {
+    body.votes = 0;
+    return db.query(`INSERT INTO comments (body, author,article_id) 
+    VALUES ($1,$2,$3) RETURNING *;`,[body.body,body.username, article_id])
+    .then((comment) => {
+        return comment.rows[0];
+    });
+}
