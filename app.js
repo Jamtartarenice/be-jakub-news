@@ -1,3 +1,4 @@
+const cors = require('cors');
 const express = require('express');
 const app = express();
 const {
@@ -16,6 +17,8 @@ const {
     handleServerErrors,
     } = require('./errors.js');
 
+
+app.use(cors());
 app.use(express.json());
 
 app.delete('/api/comments/:comment_id',deleteComment)
